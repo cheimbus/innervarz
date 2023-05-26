@@ -5,6 +5,7 @@ import * as express from 'express';
 import * as path from 'path';
 import { HttpExceptionFilter } from './common/http-exception.filter';
 import { successInterceptor } from './common/success.interceptor';
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -14,6 +15,14 @@ async function bootstrap() {
 
   const currentPath = path.dirname(require.main.filename);
   app.use('/images', express.static(path.join(currentPath, `../src/images`)));
+
+  const corsOptions: CorsOptions = {
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  };
+  app.enableCors(corsOptions);
 
   const port = 8080;
   await app.listen(port);

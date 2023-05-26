@@ -100,7 +100,7 @@ print(result['result'])
       }
       const imageName = `face${number}.png`;
       // 배포 후 url수정해야 됨
-      return `http://localhost:8080/images/${imageName}`;
+      return `http://13.125.211.113:7929/images/${imageName}`;
     } catch (err) {
       return err;
     }
