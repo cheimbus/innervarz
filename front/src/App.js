@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import axios from "axios";
 
-function App() {
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [imageData, setImageData] = useState(null);
+
+  const handleClick = async () => {
+    setCount((prevCount) => prevCount + 1);
+    try {
+      const response = await axios.get(
+        `http://13.125.211.113:7929/image/${count}`
+      );
+      setImageData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={handleClick}>Increase Count</button>
+      <div>{count}</div>
+      {imageData && <img src={imageData.imageUrl} alt={`Image ${count}`} />}
     </div>
   );
-}
+};
 
 export default App;
