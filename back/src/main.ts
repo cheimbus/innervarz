@@ -17,10 +17,8 @@ async function bootstrap() {
   app.use('/images', express.static(path.join(currentPath, `../src/images`)));
 
   const corsOptions: CorsOptions = {
-    origin: true,
+    origin: "http://13.125.211.113:3000",
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
   };
   app.enableCors(corsOptions);
 
