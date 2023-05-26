@@ -24,7 +24,7 @@ async function bootstrap() {
   };
   app.enableCors(corsOptions);
 
-  const port = 8080;
+  const port = 7929;
   await app.listen(port);
   console.log(`listening on port: ${port}`);
 }
