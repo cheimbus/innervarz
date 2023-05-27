@@ -14,32 +14,24 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GuessController = void 0;
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
 const guess_service_1 = require("./guess.service");
 let GuessController = class GuessController {
     constructor(guessService) {
         this.guessService = guessService;
     }
-    async guessGender(number) {
-        return this.guessService.guessGender(number);
-    }
-    getImage(number) {
-        return this.guessService.getImage(number);
+    async guessGender(image) {
+        return this.guessService.guessGender(image);
     }
 };
 __decorate([
-    (0, common_1.Post)('guess/:number'),
-    __param(0, (0, common_1.Param)('number')),
+    (0, common_1.Post)('guess'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('image')),
+    __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], GuessController.prototype, "guessGender", null);
-__decorate([
-    (0, common_1.Get)('image/:number'),
-    __param(0, (0, common_1.Param)('number')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], GuessController.prototype, "getImage", null);
 GuessController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [guess_service_1.GuessService])

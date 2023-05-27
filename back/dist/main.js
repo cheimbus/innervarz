@@ -11,8 +11,13 @@ async function bootstrap() {
     app.useGlobalFilters(new http_exception_filter_1.HttpExceptionFilter());
     app.useGlobalInterceptors(new success_interceptor_1.successInterceptor());
     const currentPath = path.dirname(require.main.filename);
-    app.use('/images', express.static(path.join(currentPath, `../src/images`)));
-    const port = 8080;
+    app.use('/image', express.static(path.join(currentPath, `../src/images`)));
+    const corsOptions = {
+        origin: true,
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    };
+    app.enableCors(corsOptions);
+    const port = 7929;
     await app.listen(port);
     console.log(`listening on port: ${port}`);
 }

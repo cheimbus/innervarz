@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const axios_1 = require("@nestjs/axios");
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
 const guess_controller_1 = require("./guess/guess.controller");
 const guess_module_1 = require("./guess/guess.module");
 const guess_service_1 = require("./guess/guess.service");
@@ -16,7 +17,7 @@ let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [guess_module_1.GuessModule, axios_1.HttpModule],
+        imports: [guess_module_1.GuessModule, axios_1.HttpModule, platform_express_1.MulterModule.register(),],
         controllers: [guess_controller_1.GuessController],
         providers: [guess_service_1.GuessService],
     })
