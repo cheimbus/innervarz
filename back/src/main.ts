@@ -14,7 +14,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new successInterceptor());
 
   const currentPath = path.dirname(require.main.filename);
-  app.use('/images', express.static(path.join(currentPath, `../src/images`)));
+  app.use('/image', express.static(path.join(currentPath, `../src/images`)));
 
   const corsOptions: CorsOptions = {
     origin: true,

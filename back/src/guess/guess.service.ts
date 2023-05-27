@@ -112,7 +112,7 @@ print(result['result'])
         throw new BadRequestException('잘못된 요청입니다.');
       }
       const imageName = `face${number}.png`;
-      return `http://13.125.211.113:7929/images/${imageName}`;
+      return `http://13.125.211.113:7929/image/${imageName}`;
     } catch (err) {
       return err;
     }
