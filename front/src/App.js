@@ -20,7 +20,6 @@ const App = () => {
         `http://13.125.211.113:7929/image/${newCount}`
       );
       setImageData(response.data.data);
-      console.log(response.data.data);
       setResult("");
     } catch (error) {
       console.error(error);
@@ -35,7 +34,6 @@ const App = () => {
         `http://13.125.211.113:7929/guess/${count}`
       );
       setResult(response.data.data);
-      console.log(response.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -101,7 +99,7 @@ const App = () => {
     <div style={containerStyle}>
       <div style={titleStyle}>
         <div style={leftContentStyle}>
-          <img src={image} width="300" height="61" />
+          <img src={image} width="300" height="55" />
           <h1></h1>
         </div>
         <div style={rightContentStyle}>
@@ -109,7 +107,7 @@ const App = () => {
         </div>
       </div>
       <button onClick={handleClick} style={imageButtonStyle}>
-        {showText && "imageButton"}
+        {showText && "Click button"}
       </button>
       <div style={{ marginBottom: "1px" }} />
       <button

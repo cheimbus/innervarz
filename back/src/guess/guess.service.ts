@@ -1,4 +1,7 @@
-// node.js http requests code
+/**
+ * @description 해당 코드는 nodejs에서 http요청을 보내는 코드입니다.
+ * 현재 딥러닝서버에서는 python 코드만 request받게 되어있어서 이 코드를 이용하면 -17으로 통일된 값을 받습니다. 따라서 원하는 값을 얻을 수 없습니다.
+ */
 // import { Injectable } from '@nestjs/common';
 // import axios from 'axios';
 // import * as msgpack5 from 'msgpack5';
@@ -40,6 +43,16 @@ export class GuessService {
   constructor() {
     this.msgpack = msgpack5();
   }
+
+  /**
+   * @param number controller에서 받은 number값으로 비즈니스 로직을 수행합니다.
+   * @function guessGender 이 함수는 @httpRequestToDeepLearningServerForPython , @getGenderRatio 을 실행합니다.
+   * @function httpRequestToDeepLearningServerForPython 이 함수는 서버에 가지고있는 이미지를 이용해서 받아온 count에 알맞은 이미지를 가져오고, 파이썬코드를 이용해서 딥러닝 서버에 http요청을 보내는 함수입니다.
+   * @return 딥러닝 서버에서 받은 리턴값입니다. (ex: 0.9994483727)
+   * @function getGenderRatio 이 함수는 @httpRequestToDeepLearningServerForPython 여기서 받은 값을 이용해 99% female 형태로 변환시켜주는 함수입니다.
+   * @return (ex: 99% female)
+   * @function getImage 이 함수는 count에 맞는 정적 이미지 경로를 리턴합니다.
+   */
   async guessGender(number: number) {
     if (+number < 1 || +number > 5) {
       throw new BadRequestException('잘못된 요청입니다.');
@@ -99,7 +112,6 @@ print(result['result'])
         throw new BadRequestException('잘못된 요청입니다.');
       }
       const imageName = `face${number}.png`;
-      // 배포 후 url수정해야 됨
       return `http://13.125.211.113:7929/images/${imageName}`;
     } catch (err) {
       return err;
