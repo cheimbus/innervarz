@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import innerberzlogo from "./innerberzlogo.jpg";
 
@@ -6,6 +6,20 @@ const App = () => {
   const [image, setImage] = useState(null);
   const [result, setResult] = useState("");
   const [showUploadText, setShowUploadText] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const imageButtonRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -29,12 +43,19 @@ const App = () => {
     }
   };
 
+  const handleUploadButtonClick = () => {
+    imageButtonRef.current.click();
+  };
+
   const imageButtonStyle = {
-    display: "block",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     width: "400px",
     height: "400px",
     border: "1px solid #ccc",
     position: "relative",
+    overflow: "hidden",
   };
 
   const uploadTextStyle = {
@@ -43,6 +64,12 @@ const App = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     color: "gray",
+  };
+
+  const uploadedImageStyle = {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   };
 
   const guessButtonStyle = {
@@ -83,26 +110,29 @@ const App = () => {
     alignItems: "center",
   };
 
-  const innerberzlogoStyle = {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-  };
-
   return (
     <div style={containerStyle}>
       <div style={titleStyle}>
         <img src={innerberzlogo} alt="Logo" style={logoStyle} />
       </div>
-      <label htmlFor="imageUpload" style={imageButtonStyle}>
+      <div
+        style={imageButtonStyle}
+        onClick={handleUploadButtonClick}
+        role="button"
+      >
         {showUploadText && <div style={uploadTextStyle}>Upload Image</div>}
         {image && (
-          <img src={URL.createObjectURL(image)} style={innerberzlogoStyle} />
+          <img
+            src={URL.createObjectURL(image)}
+            style={uploadedImageStyle}
+            alt="Uploaded"
+          />
         )}
-      </label>
+      </div>
       <input
-        id="imageUpload"
+        ref={imageButtonRef}
         type="file"
+        accept="image/*"
         onChange={handleImageUpload}
         style={{ display: "none" }}
       />
